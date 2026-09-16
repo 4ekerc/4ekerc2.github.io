@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Проект</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue: #0a2a5e;
+      --blue-mid: #1a4080;
+      --accent: #00aaff;
+      --light: #f4f8ff;
+      --white: #ffffff;
+      --gray: #6b7a99;
+      --border: #d0dff0;
+      --text: #1a2540;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Open Sans', sans-serif;
+      color: var(--text);
+      background: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; width: 100%; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 60px;
+      background: rgba(10, 42, 94, 0.92);
+      backdrop-filter: blur(10px);
+    }
+
+    .nav-logo {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900; font-size: 22px;
+      color: var(--white); letter-spacing: 3px;
+    }
+    .nav-logo span { color: var(--accent); }
+
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a {
+      color: rgba(255,255,255,0.85); text-decoration: none;
+      font-family: 'Montserrat', sans-serif; font-size: 13px;
+      font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #040f26 0%, #0a2a5e 45%, #0e3d7a 100%);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; padding: 120px 40px 80px;
+      position: relative; overflow: hidden;
+    }
+
+    /* animated particle grid */
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        radial-gradient(circle, rgba(0,170,255,0.12) 1px, transparent 1px);
+      background-size: 40px 40px;
+      animation: gridDrift 20s linear infinite;
+    }
+    .hero::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 50% 60%, transparent 40%, rgba(4,15,38,0.7) 100%);
+    }
+
+    @keyframes gridDrift {
+      0%   { background-position: 0 0; }
+      100% { background-position: 40px 40px; }
+    }
+
+    .hero-content { position: relative; z-index: 1; max-width: 860px; }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(0,170,255,0.15);
+      border: 1px solid rgba(0,170,255,0.4);
+      color: var(--accent);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 3px; text-transform: uppercase;
+      padding: 6px 18px; border-radius: 20px;
+      margin-bottom: 28px;
+      animation: fadeUp 0.8s ease both;
+    }
+
+    .hero h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900; font-size: clamp(28px, 5vw, 56px);
+      line-height: 1.15; color: var(--white);
+      margin-bottom: 28px;
+      animation: fadeUp 0.8s 0.15s ease both;
+    }
+    .hero h1 em { color: var(--accent); font-style: normal; }
+
+    .hero p {
+      font-size: 17px; color: rgba(255,255,255,0.7);
+      line-height: 1.75; max-width: 620px; margin: 0 auto 44px;
+      animation: fadeUp 0.8s 0.3s ease both;
+    }
+
+    .hero-arrow {
+      width: 44px; height: 44px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto;
+      animation: bounce 2.5s ease-in-out infinite, fadeUp 0.8s 0.45s ease both;
+      cursor: pointer;
+    }
+    .hero-arrow svg { color: rgba(255,255,255,0.6); }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(8px); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── STATS ── */
+    .stats {
+      background: var(--light);
+      padding: 80px 60px;
+    }
+
+    .stats-label {
+      text-align: center;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 13px; font-weight: 700;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 12px;
+    }
+    .stats-title {
+      text-align: center;
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(18px, 2.5vw, 28px); font-weight: 800;
+      color: var(--blue); margin-bottom: 60px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 24px; max-width: 1100px; margin: 0 auto;
+    }
+
+    .stat-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 36px 28px;
+      text-align: center;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .stat-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 48px rgba(10,42,94,0.1);
+    }
+
+    .stat-value {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 52px; font-weight: 900;
+      line-height: 1;
+      background: linear-gradient(135deg, var(--accent), var(--blue-mid));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      margin-bottom: 8px;
+    }
+    .stat-compare {
+      font-size: 12px; color: var(--gray);
+      margin-bottom: 14px;
+      font-style: italic;
+    }
+    .stat-desc {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700; font-size: 13px;
+      color: var(--blue); text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .stat-card.icon-only .stat-icon {
+      font-size: 38px; margin-bottom: 16px;
+    }
+    .stat-card.icon-only .stat-desc {
+      font-size: 14px; letter-spacing: 0;
+    }
+
+    /* ── CLIENTS ── */
+    .clients {
+      padding: 90px 60px;
+      max-width: 1200px; margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 13px; font-weight: 700;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(24px, 3vw, 36px); font-weight: 800;
+      color: var(--blue); margin-bottom: 52px;
+    }
+
+    .clients-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 28px;
+    }
+
+    .client-card {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px 28px;
+      display: flex; gap: 20px; align-items: flex-start;
+      transition: box-shadow 0.2s, border-color 0.2s;
+    }
+    .client-card:hover {
+      box-shadow: 0 12px 36px rgba(10,42,94,0.09);
+      border-color: var(--accent);
+    }
+
+    .client-icon {
+      width: 52px; height: 52px; flex-shrink: 0;
+      background: linear-gradient(135deg, rgba(0,170,255,0.1), rgba(26,64,128,0.1));
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px;
+    }
+
+    .client-info h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700; font-size: 14px;
+      color: var(--blue); margin-bottom: 8px;
+    }
+    .client-info p {
+      font-size: 13px; color: var(--gray);
+      line-height: 1.65;
+    }
+
+    /* ── TECH ── */
+    .tech {
+      background: linear-gradient(135deg, var(--blue) 0%, #0e3d7a 100%);
+      padding: 90px 60px;
+      text-align: center;
+    }
+    .tech .section-label { color: rgba(0,170,255,0.8); }
+    .tech .section-title { color: var(--white); }
+    .tech p {
+      color: rgba(255,255,255,0.72);
+      max-width: 660px; margin: 0 auto;
+      font-size: 16px; line-height: 1.8;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--blue);
+      padding: 48px 60px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 28px;
+    }
+
+    .footer-logo {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900; font-size: 18px;
+      color: var(--white); letter-spacing: 3px;
+    }
+    .footer-logo span { color: var(--accent); }
+
+    .footer-support {
+      max-width: 520px;
+      font-size: 12px; color: rgba(255,255,255,0.55);
+      line-height: 1.7; text-align: right;
+    }
+    .footer-support strong {
+      color: rgba(255,255,255,0.85);
+      display: block; margin-bottom: 4px;
+    }
+
+    footer {
+    width: 100%;
+    padding: 24px 40px;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    background: #0a2a5e; 
+    border-top: 1px solid #262a33;
+  }
+ 
+  /* Логотип */
+  .footer-logo {
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    line-height: 1;
+    white-space: nowrap;
+  }
+  .footer-logo span { color: #e63946; }
+ 
+  /* Блок с картинками — слева от текста */
+  .footer-images {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+ 
+  .footer-images img {
+    height: 80px;           /* фиксированная высота — все одного размера */
+    width: auto;            /* ширина по пропорциям, без искажений */
+    object-fit: contain;    /* никакого кропа — без потери разрешения */
+    display: block;
+  }
+ 
+  /* Текст поддержки */
+  .footer-support {
+    font-size: 13px;
+    line-height: 1.45;
+    color: #b8bcc4;
+    max-width: 640px;
+  }
+  .footer-support strong {
+    display: block;
+    margin-bottom: 6px;
+    color: #ffffff;
+    font-size: 14px;
+  }
+
+  .newText{
+    margin-top: 10px;
+  }
+
+  .section-title2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(24px, 3vw, 36px); font-weight: 800;
+      color: var(--blue); margin-bottom: 52px;
+      margin-top: 54px;
+
+  }
+    .section-2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(24px, 3vw, 36px); font-weight: 800;
+      color: var(--blue); margin-bottom: 52px;
+      margin-top: 54px;
+      display: flex;
+      align-items: center;
+  }
+    .footer-images2 {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 40px;
+  }
+ 
+  .footer-images2 img {
+    height: 385px;           /* фиксированная высота — все одного размера */
+    width: auto;            /* ширина по пропорциям, без искажений */
+    object-fit: contain;    /* никакого кропа — без потери разрешения */
+    display: block;
+  }
+
+ 
+  /* Адаптив: на узких экранах — в столбик */
+  @media (max-width: 900px) {
+    footer {
+      grid-template-columns: 1fr;
+      justify-items: start;
+      gap: 20px;
+      padding: 20px;
+    }
+    .footer-images img { height: 64px; }
+  }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; }
+      .stats, .clients, .tech { padding: 60px 24px; }
+      footer { padding: 36px 24px; flex-direction: column; text-align: center; }
+      .footer-support { text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav>
+  <div class="nav-logo"></div>
+  <ul class="nav-links">
+    <li><a href="#about">О нас</a></li>
+    <li><a href="#products">Продукция</a></li>
+    <li><a href="#science">Наука</a></li>
+    <li><a href="#history">История</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="about">
+  <div class="hero-content">
+
+    <h1>Разработка технологии высокобелковых кисломолочных напитков с инкапсулированными биофлавоноидами</h1>
+    <p>Продукт: технология высокобелковых кисломолочных напитков с биофлавоноидами.
+    <br>Назначение: полка продуктов здорового питания. 
+    <br>Актуальность для потребителя: высокое содержание белка способствует поддержанию мышечной массы и восстановлению тканей организма, а биофлавоноиды обеспечивают защиту клеток от окислительного стресса и улучшают общее состояние здоровья.</p>
+    <div class="hero-arrow" onclick="document.getElementById('stats').scrollIntoView({behavior:'smooth'})">
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+        <path d="M12 5v14M5 12l7 7 7-7"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats" id="stats" id="products">
+  <div class="stats-label">Наша инновационая рецептура</div>
+  <div class="stats-title">Ключевые характеристики</div>
+  <div class="stats-grid">
+
+    <div class="stat-card">
+      <div class="stat-desc">ВЫСОКОЕ СОДЕРЖАНИЕ БЕЛКА 9%</div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-desc">НИЗКОЕ СОДЕРЖАНИЕ ЖИРА 2,1%</div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-desc">НИЗКОЕ СОДЕРЖАНИЕ УГЛЕВОДОВ 3,9%</div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-desc">СОМО 13,7 %</div>
+    </div>
+
+    <div class="stat-card icon-only">
+      <div class="stat-desc">Низкая калорийность на 100г</div>
+    </div>
+
+    <div class="stat-card icon-only">
+      <div class="stat-desc">Высокий срок хранения</div>
+    </div>
+
+  </div>
+  <div class="newText"><p>Технология включает приёмку и входной контроль сырья, нормализацию молока, подготовку раствора биофлавоноидов и их инкапсулирование ультразвуковой обработкой, составление молочной смеси, гомогенизацию, пастеризацию, охлаждение, внесение закваски, сквашивание, охлаждение и асептический послойный розлив, а уникальность продукта заключается в сочетании высокобелкового молочного питания и функциональных свойств инкапсулированных биофлавоноидов, обеспечивающих антиоксидантную защиту и поддержку здоровья потребителей.</p></div>
+
+</section>
+
+<!-- CLIENTS -->
+<section class="clients" id="science">
+  <div class="section-label">Применение</div>
+  <div class="section-title">Кому мы полезны?</div>
+  <div class="clients-grid">
+
+    <div class="client-card">
+      <div class="client-info">
+        <h3>Спортсменам</h3>
+      </div>
+    </div>
+
+    <div class="client-card">
+      <div class="client-info">
+        <h3>Военным</h3>
+      </div>
+    </div>
+
+    <div class="client-card">
+      <div class="client-info">
+        <h3>Людям с сидячей работой</h3>
+      </div>
+    </div>
+
+    <div class="client-card">
+      <div class="client-info">
+        <h3>Людям с тяжелыми условиями труда</h3>
+      </div>
+    </div>
+
+    <div class="client-card">
+      <div class="client-info">
+        <h3>Людям ведущим активный образ жизни</h3>
+      </div>
+    </div>
+
+  </div>
+
+    <div class="section-title2">Изображения продукта
+      <div>
+          <div class="footer-images2">
+      <img src="./pic1.png" alt="">
+      <img src="./pic2.png" alt="">
+          </div>
+
+    </div>
+    </div>
+
+</section>
+
+<!-- TECH BLOCK -->
+<section class="tech" id="history">
+  <div class="section-label"></div>
+  <div class="section-title">Разработка технологии высокобелковых кисломолочных напитков с инкапсулированными биофлавоноидами</div>
+  <p>Питательные высокобелковые йогуртовые напитки с инкапсулированными биофлавоноидами для спортсменов и людей, ведущих активный образ жизни.
+    
+</p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo"></div>
+ 
+  <div class="footer-images">
+    <img src="./photo_2026-06-12_21-06-08.jpg" alt="">
+    <img src="./photo_2026-06-12_21-06-08 (2).jpg" alt="">
+  </div>
+ 
+  <div class="footer-support">
+    <strong>При поддержке Фонда содействия инновациям</strong>
+Проект реализован при поддержке Фонда содействия инновациям в рамках программы «Студенческий стартап» мероприятия «Платформа университетского технологического предпринимательства» федерального проекта «Технологии»
+  </div>
+</footer>
+
+</body>
+</html>
